@@ -1,0 +1,22 @@
+!!!5
+html
+	head
+		title My Site
+			link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		header
+		h1 My Site
+		.container
+			div
+				table(style="border:2px solid black")
+					-var label = null
+					-each item in json
+						if label==item.y.value
+							tr(style="border:2px solid black")
+								td(style='width: '+(100/2)+'%').
+								td(style='width: '+(100/2)+'%'). #{item.z.value}
+						else
+							label = item.y.value
+							tr(style="border:2px solid black")
+								td(style='width: '+(100/2)+'%'). #{item.y.value}
+								td(style='width: '+(100/2)+'%'). #{item.z.value}

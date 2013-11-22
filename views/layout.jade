@@ -1,0 +1,42 @@
+!!!5
+html
+	head
+		title My Site
+			link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		header
+		h1 My Site
+		.container
+			div
+				table
+					-each element in json
+						if unescape(element.label)=="rdf-schema#label"
+							tr
+								td(style='width: '+(10)+'%') #{unescape(element.values[0].value)}
+						if unescape(element.label)=="depiction"
+							td(style='width: '+(90)+'%') 
+								<img src="#{unescape(element.values[0].value)}" width="1000" height="200" title="#{unescape(element.values[0].value)}" alt="No image" />
+				table(style="border:2px solid black")
+					-each item in json
+						tr(style="border:2px solid black")
+						td(style='width: '+(100/4)+'%') #{unescape(item.label)}
+						ul
+							-each items in item.values
+								-var type=items.type
+								-var lbl=unescape(items.label)
+								-var dep=unescape(items.depiction)
+								if type=="literal"
+									td(style='width: '+(75)+'%') 
+										li #{unescape(items.value)}
+								else if type=="internaluri"
+									if lbl!="undefined"
+										td(style='width: '+(75/2)+'%') 
+											li <a href="#{unescape(items.value)}" title="#{unescape(items.value)}">#{unescape(items.label)}</a>
+									if dep!="undefined"
+										td(style='width: '+(75/2)+'%') 
+											<img src="#{unescape(items.depiction)}" width="300" height="200" title="#{unescape(items.depiction)}" alt="No image" />
+								else if type=="externaluri"
+									td(style='width: '+(75)+'%') 
+										li #{unescape(items.label)}
+								tr(style="border:2px solid black")
+								td(style='width: '+(100/2)+'%')
